@@ -1,5 +1,5 @@
 <apex:page standardController="Contact">
-    <apex:form>
+    <apex:form >
         <apex:pageBlock title="Add new Contact">
             <apex:pageBlockSection columns="1">
                 <apex:inputField value="{! Contact.FirstName}"></apex:inputField>
@@ -7,7 +7,7 @@
                 <apex:inputField value="{! Contact.Email}"></apex:inputField>
             </apex:pageBlockSection>
 
-            <apex:pageBlockButtons>
+            <apex:pageBlockButtons >
                 <apex:commandButton action="{! save}" value="Save"></apex:commandButton>
             </apex:pageBlockButtons>
         </apex:pageBlock>   
