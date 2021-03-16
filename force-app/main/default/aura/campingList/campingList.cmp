@@ -1,72 +1,35 @@
-<aura:component >
+<aura:component controller="CampingListController">
+    <!-- Llama al método doInit en el Controller, para mostrar los registros existentes en la BBDD -->
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <!-- campingList va a recibir un evento desde campingListForm, y tiene que "manejarlo" en el Controller -->
+    <!-- El "event" es igual al nombre del evento, en este caso, addItemEvent -->
+    <aura:handler name="addItem" event="c:addItemEvent"
+                  action="{!c.handleAddItem}"/>
+    
     <!-- Array para almacenar los Items que se vayan creando -->
     <aura:attribute name="items" type="Camping_Item__c[]"/> 
     
-    <!-- Item de prueba -->
-    <aura:attribute name="newItem" type="Camping_Item__c"
-         default="{ 'sobjectType': 'Camping_Item__c',
-                        'Name': '',
-                        'Price__c': 0,
-                        'Quantity__c': 0,
-                        'Packed__c': false}"/>
-    
-	<!-- CREATE NEW ITEM -->
-    <div aria-labelledby="newitemform">
-    	<!-- BOX AREA -->
-        <fieldset class="slds-box slds-theme_default slds-container_small">
-        	<legend id="newitemform" class="slds-text-heading_small slds-p-vertical_medium">
-                Add Item
-            </legend>
-            <!-- CREATE NEW ITEM FORM -->
-          	<form class="slds-form_stacked">     
-                <lightning:input aura:id="itemform"
-                                 required="true"
-                                 label="Name"
-                                 name="itemname"
-                                 placeholder="Enter your name"
-                                 value="{!v.newItem.Name}"/> 
-                
-                <lightning:input aura:id="itemform"
-                                 formatter="currency"
-                                 label="Price"
-                                 name="itemprice"
-                                 value="{!v.newItem.Price__c}"/> 
-                
-                <lightning:input aura:id="itemform"
-                                 type="number"
-                                 min="1"
-                                 label="Quantity"
-                                 name="itemquantity"
-                                 value="{!v.newItem.Quantity__c}"
-                                 messageWhenRangeUnderflow="Enter minimum 1 Quantity"/>
-                
-                <lightning:input aura:id="itemform"
-                                 type="checkbox"
-                                 label="Packed"
-                                 name="itempacked"
-                                 checked="{!v.newItem.Packed__c}"/>  
-                
-                <lightning:button label="Create Item"
-                                  class="slds-m-top_medium"
-                                  variant="brand"
-                                  onclick="{!c.clickCreateItem}"/>               
-            </form>
-            <!-- / CREATE NEW ITEM FORM -->
-        </fieldset>
-        <!-- / BOX AREA -->        
-    </div>
-    <!-- / CREATE NEW ITEM -->
-
-	<!-- SHOW ITEM LIST -->
-            <fieldset class="slds-box slds-theme_default slds-container_small">
-
-    <lightning:card title="Items">
-        <p class="slds-p-horizontal_small">
-            <aura:iteration items="{!v.items}" var="item">
-                <c:campingListItem item="{!item}"/>
-            </aura:iteration>
-        </p>
-    </lightning:card>   
-    </fieldset>
+    <!-- NEW EXPENSE FORM -->
+    <lightning:layout>
+        <lightning:layoutItem padding="around-small" size="6">
+            <c:campingListForm/>
+        </lightning:layoutItem>
+    </lightning:layout>
+	
+    <!-- SHOW ITEM LIST -->
+    <lightning:layout>
+    	<lightning:layoutItem padding="around-small" size="6">
+			<fieldset class="slds-box slds-theme_default slds-container_small">
+                <lightning:card title="Items">
+                    <p class="slds-p-horizontal_small">
+                        <aura:iteration items="{!v.items}" var="item">
+                            <c:campingListItem item="{!item}"/>
+                        </aura:iteration>
+                    </p>
+                </lightning:card>   
+    		</fieldset>
+        </lightning:layoutItem>
+    </lightning:layout>
     <!-- / SHOW ITEM LIST -->
 </aura:component>
